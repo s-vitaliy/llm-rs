@@ -3,7 +3,7 @@ name = "llm-rs"
 version = "0.1.0"
 edition = "2021"
 authors = ["s-vitaliy"]
-description = "Small llm interpreter written in rust"
+description = "Small LLM interpreter written in Rust"
 license = "MIT"
 repository = "https://github.com/s-vitaliy/llm-rs"
 readme = "README.md"
@@ -11,7 +11,3 @@ readme = "README.md"
 [dependencies]
 
 [dev-dependencies]
-
-[lib]
-name = "llm_rs"
-path = "src/lib.rs"
