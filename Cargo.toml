@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 authors = ["s-vitaliy"]
 description = "Small LLM interpreter written in Rust"
-license = "MIT"
+license = "GPL-3.0"
 repository = "https://github.com/s-vitaliy/llm-rs"
 readme = "README.md"
 
