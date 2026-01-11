@@ -12,6 +12,8 @@ env:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     
     steps:
     - uses: actions/checkout@v4
@@ -21,17 +23,17 @@ jobs:
       with:
         toolchain: stable
     
+    - name: Check formatting
+      run: cargo fmt --check
+    
     - name: Build
       run: cargo build --verbose
+    
+    - name: Run clippy
+      run: cargo clippy -- -D warnings
     
     - name: Run tests
       run: cargo test --verbose
     
     - name: Run doc tests
       run: cargo test --doc --verbose
-    
-    - name: Check formatting
-      run: cargo fmt --check
-    
-    - name: Run clippy
-      run: cargo clippy -- -D warnings
