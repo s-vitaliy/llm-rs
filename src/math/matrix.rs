@@ -173,7 +173,18 @@ impl<const ROWS: usize, const COLS: usize> Matrix<ROWS, COLS> {
 ///
 /// let a = Matrix::<2, 3>::from_slice(&[1.0, 2.0, 3.0, 4.0, 5.0, 6.0]).unwrap();
 /// let b = Matrix::<2, 2>::from_slice(&[7.0, 8.0, 9.0, 10.0]).unwrap();
-/// let c = a * b; // ERROR: dimension mismatch (3 != 2)
+/// let c = a * b; // Compiler error: mismatched types
+/// ```
+///
+/// The compiler produces:
+/// ```text
+/// error[E0308]: mismatched types
+///  |
+///  |     let c = a * b;
+///  |                 ^ expected `3`, found `2`
+///  |
+///  = note: expected struct `Matrix<3, _>`
+///             found struct `Matrix<2, 2>`
 /// ```
 impl<const ROWS: usize, const K: usize, const COLS: usize> Mul<Matrix<K, COLS>>
     for Matrix<ROWS, K>
