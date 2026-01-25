@@ -60,9 +60,43 @@ The agent MUST NOT suggest larger models or architectural variants.
 
 ---
 
-## 🗂️ Code Organization (Current Structure)
+## 🗂️ Code Organization (Expected)
 
-The project uses a flat module structure without `mod.rs` files:
+The agent should respect and work within this structure:
+
+```
+model/
+config.rs // hyperparameters
+weights.rs // strongly typed weights
+model.rs // forward_step()
+
+runtime/
+kv_cache.rs
+state.rs
+session.rs // autoregressive loop
+
+math/
+matmul.rs
+softmax.rs
+rmsnorm.rs
+rope.rs
+
+tokenizer/
+simple.rs // minimal or stub tokenizer
+
+io/
+npy_loader.rs // load real weights from PyTorch exports
+```
+
+### Module Organization Principles
+
+- **No `mod.rs` files**: Use `module_name.rs` instead of `module_name/mod.rs`
+- **Tests in submodules**: Tests are in `module_name/tests.rs` (e.g., `math/matrix/tests.rs`)
+- **Flat structure**: Top-level modules are single `.rs` files that declare submodules
+
+### Current Implementation Status
+
+The current directory structure is:
 
 ```
 src/
@@ -76,41 +110,6 @@ src/
 ├── runtime.rs          // Runtime state, KV-cache, session (stub)
 ├── io.rs               // I/O operations for loading weights (stub)
 └── tokenizer.rs        // Tokenization utilities (stub)
-```
-
-### Module Organization Principles
-
-- **No `mod.rs` files**: Use `module_name.rs` instead of `module_name/mod.rs`
-- **Tests in submodules**: Tests are in `module_name/tests.rs` (e.g., `math/matrix/tests.rs`)
-- **Flat structure**: Top-level modules are single `.rs` files that declare submodules
-
-### Expected Evolution
-
-As the project grows, the structure will expand to:
-
-```
-math/
-  matrix.rs + matrix/tests.rs   // ✅ Implemented
-  matmul.rs + matmul/tests.rs   // Planned: raw matrix multiplication kernels
-  softmax.rs + softmax/tests.rs // Planned: softmax operation
-  rmsnorm.rs + rmsnorm/tests.rs // Planned: RMS normalization
-  rope.rs + rope/tests.rs        // Planned: rotary position embeddings
-
-model/
-  config.rs      // Planned: hyperparameters struct
-  weights.rs     // Planned: strongly typed weight structures
-  forward.rs     // Planned: forward pass implementation
-
-runtime/
-  kv_cache.rs    // Planned: KV-cache for attention
-  state.rs       // Planned: inference state management
-  session.rs     // Planned: autoregressive generation loop
-
-io/
-  npy_loader.rs  // Planned: load weights from NumPy/PyTorch exports
-
-tokenizer/
-  simple.rs      // Planned: minimal tokenizer implementation
 ```
 
 The agent MUST NOT introduce:
