@@ -88,6 +88,29 @@ io/
 npy_loader.rs // load real weights from PyTorch exports
 ```
 
+### Module Organization Principles
+
+- **No `mod.rs` files**: Use `module_name.rs` instead of `module_name/mod.rs`
+- **Tests in submodules**: Tests are in `module_name/tests.rs` (e.g., `math/matrix/tests.rs`)
+- **Flat structure**: Top-level modules are single `.rs` files that declare submodules
+
+### Current Implementation Status
+
+The current directory structure is:
+
+```
+src/
+├── lib.rs              // Library entry point with module declarations
+├── math.rs             // Math module declaration
+├── math/
+│   ├── matrix.rs       // Matrix type with compile-time shape checking
+│   └── matrix/
+│       └── tests.rs    // Matrix unit tests
+├── model.rs            // Model architecture (stub)
+├── runtime.rs          // Runtime state, KV-cache, session (stub)
+├── io.rs               // I/O operations for loading weights (stub)
+└── tokenizer.rs        // Tokenization utilities (stub)
+```
 
 The agent MUST NOT introduce:
 - a graph executor
