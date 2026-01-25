@@ -60,34 +60,58 @@ The agent MUST NOT suggest larger models or architectural variants.
 
 ---
 
-## 🗂️ Code Organization (Expected)
+## 🗂️ Code Organization (Current Structure)
 
-The agent should respect and work within this structure:
+The project uses a flat module structure without `mod.rs` files:
 
 ```
+src/
+├── lib.rs              // Library entry point with module declarations
+├── math.rs             // Math module declaration
+├── math/
+│   ├── matrix.rs       // Matrix type with compile-time shape checking
+│   └── matrix/
+│       └── tests.rs    // Matrix unit tests
+├── model.rs            // Model architecture (stub)
+├── runtime.rs          // Runtime state, KV-cache, session (stub)
+├── io.rs               // I/O operations for loading weights (stub)
+└── tokenizer.rs        // Tokenization utilities (stub)
+```
+
+### Module Organization Principles
+
+- **No `mod.rs` files**: Use `module_name.rs` instead of `module_name/mod.rs`
+- **Tests in submodules**: Tests are in `module_name/tests.rs` (e.g., `math/matrix/tests.rs`)
+- **Flat structure**: Top-level modules are single `.rs` files that declare submodules
+
+### Expected Evolution
+
+As the project grows, the structure will expand to:
+
+```
+math/
+  matrix.rs + matrix/tests.rs   // ✅ Implemented
+  matmul.rs + matmul/tests.rs   // Planned: raw matrix multiplication kernels
+  softmax.rs + softmax/tests.rs // Planned: softmax operation
+  rmsnorm.rs + rmsnorm/tests.rs // Planned: RMS normalization
+  rope.rs + rope/tests.rs        // Planned: rotary position embeddings
+
 model/
-config.rs // hyperparameters
-weights.rs // strongly typed weights
-model.rs // forward_step()
+  config.rs      // Planned: hyperparameters struct
+  weights.rs     // Planned: strongly typed weight structures
+  forward.rs     // Planned: forward pass implementation
 
 runtime/
-kv_cache.rs
-state.rs
-session.rs // autoregressive loop
-
-math/
-matmul.rs
-softmax.rs
-rmsnorm.rs
-rope.rs
-
-tokenizer/
-simple.rs // minimal or stub tokenizer
+  kv_cache.rs    // Planned: KV-cache for attention
+  state.rs       // Planned: inference state management
+  session.rs     // Planned: autoregressive generation loop
 
 io/
-npy_loader.rs // load real weights from PyTorch exports
-```
+  npy_loader.rs  // Planned: load weights from NumPy/PyTorch exports
 
+tokenizer/
+  simple.rs      // Planned: minimal tokenizer implementation
+```
 
 The agent MUST NOT introduce:
 - a graph executor
