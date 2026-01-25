@@ -4,6 +4,12 @@
 //!
 //! This library provides functionality for interpreting and running large language models.
 
+pub mod math;
+pub mod model;
+pub mod runtime;
+pub mod io;
+pub mod tokenizer;
+
 /// A placeholder function that demonstrates the library structure.
 ///
 /// # Examples
