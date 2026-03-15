@@ -22,6 +22,7 @@ jobs:
       uses: actions-rust-lang/setup-rust-toolchain@v1
       with:
         toolchain: stable
+        components: llvm-tools-preview
     
     - name: Check formatting
       run: cargo fmt --check
@@ -37,6 +38,9 @@ jobs:
     
     - name: Run doc tests
       run: cargo test --doc --verbose
+
+    - name: Install cargo-llvm-cov
+      run: cargo install cargo-llvm-cov
 
     - name: Generate code coverage
       run: cargo llvm-cov --all-features --workspace --lcov --output-path lcov.info
