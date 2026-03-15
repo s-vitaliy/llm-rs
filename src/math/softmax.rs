@@ -26,6 +26,16 @@ mod tests;
 /// let sum: f32 = probs.iter().sum();
 /// assert!((sum - 1.0).abs() < 1e-5);
 /// ```
+///
+/// An empty logits slice returns an empty probability vector:
+///
+/// ```
+/// use llm_rs::math::softmax;
+///
+/// let logits: [f32; 0] = [];
+/// let probs = softmax(&logits);
+/// assert!(probs.is_empty());
+/// ```
 pub fn softmax(logits: &[f32]) -> Vec<f32> {
     if logits.is_empty() {
         return Vec::new();
