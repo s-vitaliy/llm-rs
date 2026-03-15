@@ -67,7 +67,7 @@
 - [x] Functions have doc comments with usage examples
 
 ### Notes / Blockers
->[!NOTE]The code contains type casts which may be unsafe in some contexts.
+>[!NOTE] The code contains type casts which may be unsafe in some contexts.
 > >One caveat in general:
 > >For very large lengths (> 16_777_216), usize -> f32 can lose integer precision.
 > >It won’t become unsafe memory-wise, but it can introduce small numeric error.
