@@ -26,24 +26,24 @@
 ### Tasks
 
 #### 1.1 Project Structure
-- [ ] Create `src/math/` directory
-- [ ] Create `src/model/` directory
-- [ ] Create `src/runtime/` directory
-- [ ] Create `src/io/` directory
-- [ ] Create `src/tokenizer/` directory
-- [ ] Update `src/lib.rs` with module declarations
+- [x] Create `src/math/` directory
+- [x] Create `src/model/` directory
+- [x] Create `src/runtime/` directory
+- [x] Create `src/io/` directory
+- [x] Create `src/tokenizer/` directory
+- [x] Update `src/lib.rs` with module declarations
 
 #### 1.2 Type-Safe Matrix Operations (`src/math/matrix.rs`)
-- [ ] Define `struct Matrix<const ROWS: usize, const COLS: usize> { data: Vec<f32> }`
-- [ ] Implement `Matrix::new(data: Vec<f32>) -> Result<Self, ShapeError>` with length validation
-- [ ] Implement `Matrix::from_slice(data: &[f32]) -> Result<Self, ShapeError>`
-- [ ] Implement `Mul<Matrix<K, N>>` for `Matrix<M, K>` returning `Matrix<M, N>`
-  - [ ] Compiler guarantees dimension K matches
-  - [ ] Invalid operations don't compile
-- [ ] Implement `Matrix::matvec(&self, vec: &[f32; COLS]) -> [f32; ROWS]`
-- [ ] Write unit test: `Matrix<2, 3> * Matrix<3, 2> -> Matrix<2, 2>`
-- [ ] Write unit test: invalid multiplication doesn't compile (doc-test)
-- [ ] Verify results against hand-calculated values
+- [x] Define `struct Matrix<const ROWS: usize, const COLS: usize> { data: Vec<f32> }`
+- [x] Implement `Matrix::new(data: Vec<f32>) -> Result<Self, ShapeError>` with length validation
+- [x] Implement `Matrix::from_slice(data: &[f32]) -> Result<Self, ShapeError>`
+- [x] Implement `Mul<Matrix<K, N>>` for `Matrix<M, K>` returning `Matrix<M, N>`
+  - [x] Compiler guarantees dimension K matches
+  - [x] Invalid operations don't compile
+- [x] Implement `Matrix::matvec(&self, vec: &[f32; COLS]) -> [f32; ROWS]`
+- [x] Write unit test: `Matrix<2, 3> * Matrix<3, 2> -> Matrix<2, 2>`
+- [x] Write unit test: invalid multiplication doesn't compile (doc-test)
+- [x] Verify results against hand-calculated values
 
 #### 1.3 Softmax (`src/math/softmax.rs`)
 - [ ] Implement `fn softmax(logits: &[f32]) -> Vec<f32>`
@@ -603,8 +603,3 @@ Priority 3 (drop if necessary):
 - Polished example
 - Comprehensive documentation
 
----
-
-**Start Date:** _____________  
-**Target Completion:** _____________  
-**Actual Completion:** _____________
