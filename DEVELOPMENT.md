@@ -61,15 +61,18 @@
 - [x] Compare against PyTorch calculation (manual)
 
 ### Acceptance Criteria
-- [ ] All math operations have unit tests
-- [ ] Tests pass with epsilon tolerance (1e-5)
-- [ ] Code compiles without warnings
-- [ ] Functions have doc comments with usage examples
+- [x] All math operations have unit tests
+- [x] Tests pass with epsilon tolerance (1e-5)
+- [x] Code compiles without warnings
+- [x] Functions have doc comments with usage examples
 
 ### Notes / Blockers
-```
-(track issues here)
-```
+>[!NOTE]
+> The code contains type casts which may be unsafe in some contexts.
+> >One caveat in general:
+> >For very large lengths (> 16_777_216), usize -> f32 can lose integer precision.
+> >It won’t become unsafe memory-wise, but it can introduce small numeric error.
+> >So for this MVP math code, x.len() as f32 is appropriate
 
 ---
 
