@@ -35,10 +35,7 @@ pub fn rmsnorm(x: &[f32], weight: &[f32], eps: f32) -> Vec<f32> {
         weight.len(),
         "rmsnorm requires x and weight to have the same length"
     );
-    assert!(
-        eps >= 0.0,
-        "rmsnorm requires eps >= 0.0 (got {eps})"
-    );
+    assert!(eps >= 0.0, "rmsnorm requires eps >= 0.0 (got {eps})");
 
     if x.is_empty() {
         return Vec::new();
