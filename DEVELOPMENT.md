@@ -46,11 +46,11 @@
 - [x] Verify results against hand-calculated values
 
 #### 1.3 Softmax (`src/math/softmax.rs`)
-- [ ] Implement `fn softmax(logits: &[f32]) -> Vec<f32>`
-- [ ] Use numerically stable version (subtract max before exp)
-- [ ] Write unit test with simple input: `[1.0, 2.0, 3.0]`
-- [ ] Write unit test with large values to verify stability
-- [ ] Verify output sums to 1.0 (within epsilon)
+- [x] Implement `fn softmax(logits: &[f32]) -> Vec<f32>`
+- [x] Use numerically stable version (subtract max before exp)
+- [x] Write unit test with simple input: `[1.0, 2.0, 3.0]`
+- [x] Write unit test with large values to verify stability
+- [x] Verify output sums to 1.0 (within epsilon)
 
 #### 1.4 RMSNorm (`src/math/rmsnorm.rs`)
 - [ ] Implement `fn rmsnorm(x: &[f32], weight: &[f32], eps: f32) -> Vec<f32>`
