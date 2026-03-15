@@ -35,13 +35,28 @@ pub fn rmsnorm(x: &[f32], weight: &[f32], eps: f32) -> Vec<f32> {
         weight.len(),
         "rmsnorm requires x and weight to have the same length"
     );
+    assert!(
+        eps >= 0.0,
+        "rmsnorm requires eps >= 0.0 (got {eps})"
+    );
 
     if x.is_empty() {
         return Vec::new();
     }
 
     let mean_square = x.iter().map(|&v| v * v).sum::<f32>() / x.len() as f32;
-    let rms = (mean_square + eps).sqrt();
+    let denom = mean_square + eps;
+
+    if !denom.is_finite() {
+        panic!("rmsnorm: non-finite normalization term (mean_square + eps = {denom})");
+    }
+
+    if denom == 0.0 {
+        // All-zero input with zero epsilon: defined behavior is to return zeros.
+        return vec![0.0; x.len()];
+    }
+
+    let rms = denom.sqrt();
 
     x.iter()
         .zip(weight.iter())
