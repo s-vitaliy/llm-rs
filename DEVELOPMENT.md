@@ -53,12 +53,12 @@
 - [x] Verify output sums to 1.0 (within epsilon)
 
 #### 1.4 RMSNorm (`src/math/rmsnorm.rs`)
-- [ ] Implement `fn rmsnorm(x: &[f32], weight: &[f32], eps: f32) -> Vec<f32>`
-- [ ] Calculate RMS: `sqrt(mean(x^2) + eps)`
-- [ ] Normalize: `x / rms`
-- [ ] Scale by weight: `normalized * weight`
-- [ ] Write unit test with simple vectors
-- [ ] Compare against PyTorch calculation (manual)
+- [x] Implement `fn rmsnorm(x: &[f32], weight: &[f32], eps: f32) -> Vec<f32>`
+- [x] Calculate RMS: `sqrt(mean(x^2) + eps)`
+- [x] Normalize: `x / rms`
+- [x] Scale by weight: `normalized * weight`
+- [x] Write unit test with simple vectors
+- [x] Compare against PyTorch calculation (manual)
 
 ### Acceptance Criteria
 - [ ] All math operations have unit tests
