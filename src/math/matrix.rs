@@ -128,6 +128,8 @@ impl<const ROWS: usize, const COLS: usize> Matrix<ROWS, COLS> {
     /// let result = m.matvec(&v);
     /// assert_eq!(result, [14.0, 32.0]); // [1*1+2*2+3*3, 4*1+5*2+6*3]
     /// ```
+    /// Allowing clippy warning for the range loop since it's more readable in this context.
+    #[allow(clippy::needless_range_loop)]
     pub fn matvec(&self, vec: &[f32; COLS]) -> [f32; ROWS] {
         let mut result = [0.0f32; ROWS];
         for i in 0..ROWS {
