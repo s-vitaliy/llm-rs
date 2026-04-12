@@ -75,5 +75,10 @@ fn test_rmsnorm_non_finite_denominator_returns_error() {
 
     let err = rmsnorm(&x, &weight, 1e-5).unwrap_err();
 
-    assert_eq!(err, RmsNormError::NonFiniteDenominator { denom: f32::INFINITY });
+    assert_eq!(
+        err,
+        RmsNormError::NonFiniteDenominator {
+            denom: f32::INFINITY
+        }
+    );
 }
