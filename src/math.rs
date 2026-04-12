@@ -7,5 +7,5 @@ mod rmsnorm;
 mod softmax;
 
 pub use matrix::{Matrix, ShapeError};
-pub use rmsnorm::rmsnorm;
+pub use rmsnorm::{rmsnorm, RmsNormError};
 pub use softmax::softmax;
