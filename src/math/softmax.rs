@@ -17,6 +17,11 @@ mod tests;
 /// A vector of probabilities with the same length as `logits`. If `logits` is empty,
 /// returns an empty vector.
 ///
+/// # Panics
+///
+/// Panics if any input logit is non-finite, or if the normalization term becomes
+/// non-finite or non-positive.
+///
 /// # Examples
 ///
 /// ```
@@ -41,17 +46,22 @@ pub fn softmax(logits: &[f32]) -> Vec<f32> {
         return Vec::new();
     }
 
+    if logits.iter().any(|x| !x.is_finite()) {
+        panic!("softmax requires all logits to be finite");
+    }
+
     let max_logit = logits.iter().copied().fold(f32::NEG_INFINITY, f32::max);
 
-    // If the maximum logit is not finite (e.g., all -inf or NaN), avoid computing
-    // (x - max_logit).exp(), which would produce NaNs implicitly. Instead, return
-    // a clear failure mode with explicit NaN probabilities.
     if !max_logit.is_finite() {
-        return vec![f32::NAN; logits.len()];
+        panic!("softmax requires a finite maximum logit");
     }
 
     let exp_values: Vec<f32> = logits.iter().map(|&x| (x - max_logit).exp()).collect();
     let exp_sum: f32 = exp_values.iter().sum();
+
+    if !exp_sum.is_finite() || exp_sum <= 0.0 {
+        panic!("softmax produced an invalid normalization term: {exp_sum}");
+    }
 
     exp_values.iter().map(|&x| x / exp_sum).collect()
 }

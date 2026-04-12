@@ -35,3 +35,15 @@ fn test_softmax_output_sums_to_one() {
 
     assert!((sum - 1.0).abs() < EPSILON);
 }
+
+#[test]
+#[should_panic(expected = "softmax requires all logits to be finite")]
+fn test_softmax_nan_input_panics() {
+    let _ = softmax(&[1.0, f32::NAN, 3.0]);
+}
+
+#[test]
+#[should_panic(expected = "softmax requires all logits to be finite")]
+fn test_softmax_infinite_input_panics() {
+    let _ = softmax(&[1.0, f32::INFINITY, 3.0]);
+}
