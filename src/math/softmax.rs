@@ -54,9 +54,5 @@ pub fn softmax(logits: &[f32]) -> Vec<f32> {
     let exp_values: Vec<f32> = logits.iter().map(|&x| (x - max_logit).exp()).collect();
     let exp_sum: f32 = exp_values.iter().sum();
 
-    if !exp_sum.is_finite() || exp_sum <= 0.0 {
-        panic!("softmax produced an invalid normalization term: {exp_sum}");
-    }
-
     exp_values.iter().map(|&x| x / exp_sum).collect()
 }
