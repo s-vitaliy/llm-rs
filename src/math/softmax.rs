@@ -19,8 +19,7 @@ mod tests;
 ///
 /// # Panics
 ///
-/// Panics if any input logit is non-finite, or if the normalization term becomes
-/// non-finite or non-positive.
+/// Panics if any input logit is non-finite.
 ///
 /// # Examples
 ///
@@ -51,10 +50,6 @@ pub fn softmax(logits: &[f32]) -> Vec<f32> {
     }
 
     let max_logit = logits.iter().copied().fold(f32::NEG_INFINITY, f32::max);
-
-    if !max_logit.is_finite() {
-        panic!("softmax requires a finite maximum logit");
-    }
 
     let exp_values: Vec<f32> = logits.iter().map(|&x| (x - max_logit).exp()).collect();
     let exp_sum: f32 = exp_values.iter().sum();
