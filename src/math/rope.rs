@@ -172,6 +172,8 @@ pub fn compute_freqs(head_dim: RopeHeadDim, max_seq_len: usize, theta: RopeTheta
 /// - `q` and `k` have different lengths
 /// - `q.len()` is not divisible by the validated `head_dim`
 /// - `pos` is outside the precomputed frequency range
+/// - `pos` is so large that internal indexing into the precomputed RoPE
+///   frequencies overflows `usize`
 ///
 /// # Examples
 ///
