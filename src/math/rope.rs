@@ -75,11 +75,15 @@ impl RopeFreqs {
     /// # Panics
     ///
     /// Panics if `data.len()` is not a whole number of positions for the given
-    /// `head_dim`.
+    /// `head_dim`, or if any angle value is not finite.
     pub fn from_angles(head_dim: RopeHeadDim, data: Vec<f32>) -> Self {
         assert!(
             data.len().is_multiple_of(head_dim.pair_count()),
             "RoPE frequency buffer must contain a whole number of positions"
+        );
+        assert!(
+            data.iter().all(|angle| angle.is_finite()),
+            "RoPE frequency buffer must contain only finite angles"
         );
 
         Self { head_dim, data }
@@ -194,13 +198,15 @@ pub fn apply_rope(q: &mut [f32], k: &mut [f32], pos: usize, freqs: &RopeFreqs) {
         "q and k length must be divisible by head_dim"
     );
 
+    let sin_cos: Vec<(f32, f32)> = (0..pair_count)
+        .map(|pair_idx| freqs.angle(pos, pair_idx).sin_cos())
+        .collect();
+
     for (q_head, k_head) in q
         .chunks_exact_mut(head_dim)
         .zip(k.chunks_exact_mut(head_dim))
     {
-        for pair_idx in 0..pair_count {
-            let angle = freqs.angle(pos, pair_idx);
-            let (sin, cos) = angle.sin_cos();
+        for (pair_idx, &(sin, cos)) in sin_cos.iter().enumerate() {
             let even_idx = pair_idx * 2;
 
             let q_even = q_head[even_idx];
