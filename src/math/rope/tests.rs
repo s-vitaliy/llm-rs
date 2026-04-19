@@ -53,3 +53,41 @@ fn test_apply_rope_rotates_each_head_independently() {
     assert_slice_close(&q, &[0.0, 1.0, -1.0, 0.0]);
     assert_slice_close(&k, &[-1.0, 0.0, 0.0, 1.0]);
 }
+
+#[test]
+#[should_panic]
+fn test_rope_head_dim_new_panics_on_invalid_dim() {
+    let _ = RopeHeadDim::new(0);
+}
+
+#[test]
+#[should_panic]
+fn test_rope_theta_new_panics_on_invalid_theta() {
+    let _ = RopeTheta::new(0.0);
+}
+
+#[test]
+#[should_panic]
+fn test_rope_freqs_from_angles_panics_on_mismatched_buffer_length() {
+    let _ = RopeFreqs::from_angles(RopeHeadDim::new(4), vec![0.0, 1.0, 2.0]);
+}
+
+#[test]
+#[should_panic]
+fn test_apply_rope_panics_on_mismatched_qk_lengths() {
+    let freqs = compute_freqs(RopeHeadDim::new(4), 2, RopeTheta::new(10_000.0));
+    let mut q = vec![1.0, 2.0, 3.0, 4.0];
+    let mut k = vec![5.0, 6.0];
+
+    apply_rope(&mut q, &mut k, 0, &freqs);
+}
+
+#[test]
+#[should_panic]
+fn test_apply_rope_panics_on_out_of_range_pos() {
+    let freqs = compute_freqs(RopeHeadDim::new(4), 2, RopeTheta::new(10_000.0));
+    let mut q = vec![1.0, 2.0, 3.0, 4.0];
+    let mut k = vec![5.0, 6.0, 7.0, 8.0];
+
+    apply_rope(&mut q, &mut k, 2, &freqs);
+}
