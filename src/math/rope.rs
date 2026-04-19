@@ -21,7 +21,7 @@ impl RopeHeadDim {
     /// Panics if `value` is zero or odd.
     pub fn new(value: usize) -> Self {
         assert!(value > 0, "head_dim must be greater than zero");
-        assert!(value % 2 == 0, "head_dim must be even");
+        assert!(value.is_multiple_of(2), "head_dim must be even");
         Self(value)
     }
 
@@ -77,7 +77,7 @@ impl RopeFreqs {
     /// `head_dim`.
     pub fn from_angles(head_dim: RopeHeadDim, data: Vec<f32>) -> Self {
         assert!(
-            data.len() % head_dim.pair_count() == 0,
+            data.len().is_multiple_of(head_dim.pair_count()),
             "RoPE frequency buffer must contain a whole number of positions"
         );
 
@@ -97,6 +97,11 @@ impl RopeFreqs {
     /// Returns the number of stored angles.
     pub fn len(&self) -> usize {
         self.data.len()
+    }
+
+    /// Returns `true` if no angles are stored.
+    pub fn is_empty(&self) -> bool {
+        self.data.is_empty()
     }
 
     /// Returns the flat frequency buffer.
@@ -184,7 +189,7 @@ pub fn apply_rope(q: &mut [f32], k: &mut [f32], pos: usize, freqs: &RopeFreqs) {
     let pair_count = freqs.head_dim().pair_count();
 
     assert!(
-        q.len() % head_dim == 0,
+        q.len().is_multiple_of(head_dim),
         "q and k length must be divisible by head_dim"
     );
 
