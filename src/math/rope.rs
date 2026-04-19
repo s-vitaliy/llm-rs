@@ -74,11 +74,15 @@ impl RopeFreqs {
     /// # Panics
     ///
     /// Panics if `data.len()` is not a whole number of positions for the given
-    /// `head_dim`.
+    /// `head_dim`, or if any angle value is not finite.
     pub fn from_angles(head_dim: RopeHeadDim, data: Vec<f32>) -> Self {
         assert!(
             data.len().is_multiple_of(head_dim.pair_count()),
             "RoPE frequency buffer must contain a whole number of positions"
+        );
+        assert!(
+            data.iter().all(|angle| angle.is_finite()),
+            "RoPE frequency buffer must contain only finite angles"
         );
 
         Self { head_dim, data }
