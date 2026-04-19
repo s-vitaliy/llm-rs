@@ -147,7 +147,10 @@ impl RopeFreqs {
 /// ```
 pub fn compute_freqs(head_dim: RopeHeadDim, max_seq_len: usize, theta: RopeTheta) -> RopeFreqs {
     let pair_count = head_dim.pair_count();
-    let mut freqs = Vec::with_capacity(max_seq_len * pair_count);
+    let capacity = max_seq_len
+        .checked_mul(pair_count)
+        .expect("RoPE frequency buffer capacity overflow");
+    let mut freqs = Vec::with_capacity(capacity);
 
     for pos in 0..max_seq_len {
         for pair_idx in 0..pair_count {
