@@ -45,7 +45,7 @@ impl RopeTheta {
     /// # Panics
     ///
     /// Panics if `value` is not finite or is not positive.
-    pub fn new(value: f32) -> Self {
+    pub const fn new(value: f32) -> Self {
         assert!(
             value.is_finite() && value > 0.0,
             "RoPE theta must be finite and positive"
@@ -53,7 +53,8 @@ impl RopeTheta {
         Self(value)
     }
 
-    fn get(self) -> f32 {
+    /// Returns the underlying theta value.
+    pub const fn get(self) -> f32 {
         self.0
     }
 }
