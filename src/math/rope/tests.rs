@@ -6,10 +6,7 @@ fn assert_slice_close(actual: &[f32], expected: &[f32]) {
     assert_eq!(actual.len(), expected.len());
 
     for (got, want) in actual.iter().zip(expected.iter()) {
-        assert!(
-            (got - want).abs() < EPSILON,
-            "expected {want}, got {got}"
-        );
+        assert!((got - want).abs() < EPSILON, "expected {want}, got {got}");
     }
 }
 
@@ -35,10 +32,7 @@ fn test_apply_rope_pos_zero_is_identity() {
 
 #[test]
 fn test_apply_rope_known_ninety_degree_rotation() {
-    let freqs = RopeFreqs::from_angles(
-        RopeHeadDim::new(2),
-        vec![0.0, std::f32::consts::FRAC_PI_2],
-    );
+    let freqs = RopeFreqs::from_angles(RopeHeadDim::new(2), vec![0.0, std::f32::consts::FRAC_PI_2]);
     let mut q = vec![1.0, 0.0];
     let mut k = vec![0.0, 1.0];
 
@@ -50,10 +44,7 @@ fn test_apply_rope_known_ninety_degree_rotation() {
 
 #[test]
 fn test_apply_rope_rotates_each_head_independently() {
-    let freqs = RopeFreqs::from_angles(
-        RopeHeadDim::new(2),
-        vec![0.0, std::f32::consts::FRAC_PI_2],
-    );
+    let freqs = RopeFreqs::from_angles(RopeHeadDim::new(2), vec![0.0, std::f32::consts::FRAC_PI_2]);
     let mut q = vec![1.0, 0.0, 0.0, 1.0];
     let mut k = vec![0.0, 1.0, 1.0, 0.0];
 

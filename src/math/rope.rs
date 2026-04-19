@@ -110,7 +110,10 @@ impl RopeFreqs {
             .checked_mul(pair_count)
             .expect("position overflow while indexing RoPE frequencies");
 
-        assert!(pair_idx < pair_count, "pair index out of bounds for head_dim");
+        assert!(
+            pair_idx < pair_count,
+            "pair index out of bounds for head_dim"
+        );
         assert!(
             freq_offset + pair_idx < self.data.len(),
             "RoPE frequencies do not contain the requested position"
@@ -185,7 +188,10 @@ pub fn apply_rope(q: &mut [f32], k: &mut [f32], pos: usize, freqs: &RopeFreqs) {
         "q and k length must be divisible by head_dim"
     );
 
-    for (q_head, k_head) in q.chunks_exact_mut(head_dim).zip(k.chunks_exact_mut(head_dim)) {
+    for (q_head, k_head) in q
+        .chunks_exact_mut(head_dim)
+        .zip(k.chunks_exact_mut(head_dim))
+    {
         for pair_idx in 0..pair_count {
             let angle = freqs.angle(pos, pair_idx);
             let (sin, cos) = angle.sin_cos();
