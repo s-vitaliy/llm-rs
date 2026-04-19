@@ -112,9 +112,9 @@
   - [ ] `wv: Matrix<D, D>`
   - [ ] `wo: Matrix<D, D>`
 - [ ] Define generic `struct FfnWeights<const D: usize, const F: usize>`:
-  - [ ] `w1: Matrix<D, F>` // gate
-  - [ ] `w2: Matrix<D, F>` // up
-  - [ ] `w3: Matrix<F, D>` // down
+  - [ ] `w1: Matrix<F, D>` // gate
+  - [ ] `w2: Matrix<F, D>` // up
+  - [ ] `w3: Matrix<D, F>` // down
 - [ ] Define generic `struct LayerWeights<const D: usize, const F: usize>`:
   - [ ] `attention: AttentionWeights<D>`
   - [ ] `ffn: FfnWeights<D, F>`
@@ -605,4 +605,3 @@ Priority 3 (drop if necessary):
 - Golden test comparison with PyTorch
 - Polished example
 - Comprehensive documentation
-
