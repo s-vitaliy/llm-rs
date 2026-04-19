@@ -85,48 +85,48 @@
 ### Tasks
 
 #### 2.1 Rotary Position Embeddings (`src/math/rope.rs`)
-- [ ] Implement `fn compute_freqs(dim: usize, max_seq_len: usize, theta: f32) -> Vec<f32>`
-- [ ] Implement `fn apply_rope(q: &mut [f32], k: &mut [f32], pos: usize, head_dim: usize, freqs: &[f32])`
-- [ ] Rotate pairs of elements: `(x, y) -> (x*cos - y*sin, x*sin + y*cos)`
-- [ ] Write unit test with pos=0 (should be identity)
-- [ ] Write unit test with known angle (e.g., 90°)
-- [ ] Verify Q and K are rotated correctly
+- [x] Implement `fn compute_freqs(dim: usize, max_seq_len: usize, theta: f32) -> Vec<f32>`
+- [x] Implement `fn apply_rope(q: &mut [f32], k: &mut [f32], pos: usize, head_dim: usize, freqs: &[f32])`
+- [x] Rotate pairs of elements: `(x, y) -> (x*cos - y*sin, x*sin + y*cos)`
+- [x] Write unit test with pos=0 (should be identity)
+- [x] Write unit test with known angle (e.g., 90°)
+- [x] Verify Q and K are rotated correctly
 
 #### 2.2 Model Configuration (`src/model/config.rs`)
-- [ ] Define generic `struct ModelConfig<const N_LAYERS, const MODEL_DIM, const N_HEADS, const FFN_DIM, const VOCAB_SIZE>`:
-  - [ ] `rope_theta: f32` (= 10000.0)
-  - [ ] `max_seq_len: usize` (= 512)
-  - [ ] `eps: f32` (= 1e-5)
-  - [ ] `HEAD_DIM` computed as `MODEL_DIM / N_HEADS` (compile-time check)
-- [ ] Define type alias for MVP configuration:
-  - [ ] `type TinyLlamaConfig = ModelConfig<2, 256, 4, 1024, 16384>`
-- [ ] Implement `const fn validate()` for compile-time checks:
-  - [ ] `MODEL_DIM % N_HEADS == 0`
-  - [ ] `N_LAYERS > 0`
-- [ ] Add helper const functions: `head_dim()`, `kv_dim()`
+- [x] Define generic `struct ModelConfig<const N_LAYERS, const MODEL_DIM, const N_HEADS, const FFN_DIM, const VOCAB_SIZE>`:
+  - [x] `rope_theta: f32` (= 10000.0)
+  - [x] `max_seq_len: usize` (= 512)
+  - [x] `eps: f32` (= 1e-5)
+  - [x] `HEAD_DIM` computed as `MODEL_DIM / N_HEADS` (compile-time check)
+- [x] Define type alias for MVP configuration:
+  - [x] `type TinyLlamaConfig = ModelConfig<2, 256, 4, 1024, 16384>`
+- [x] Implement `const fn validate()` for compile-time checks:
+  - [x] `MODEL_DIM % N_HEADS == 0`
+  - [x] `N_LAYERS > 0`
+- [x] Add helper const functions: `head_dim()`, `kv_dim()`
 
 #### 2.3 Weight Structures (`src/model/weights.rs`)
-- [ ] Define generic `struct AttentionWeights<const D: usize>`:
-  - [ ] `wq: Matrix<D, D>`
-  - [ ] `wk: Matrix<D, D>`
-  - [ ] `wv: Matrix<D, D>`
-  - [ ] `wo: Matrix<D, D>`
-- [ ] Define generic `struct FfnWeights<const D: usize, const F: usize>`:
-  - [ ] `w1: Matrix<F, D>` // gate
-  - [ ] `w2: Matrix<F, D>` // up
-  - [ ] `w3: Matrix<D, F>` // down
-- [ ] Define generic `struct LayerWeights<const D: usize, const F: usize>`:
-  - [ ] `attention: AttentionWeights<D>`
-  - [ ] `ffn: FfnWeights<D, F>`
-  - [ ] `attention_norm: [f32; D]`
-  - [ ] `ffn_norm: [f32; D]`
-- [ ] Types guarantee correct dimensions at compile time
+- [x] Define generic `struct AttentionWeights<const D: usize>`:
+  - [x] `wq: Matrix<D, D>`
+  - [x] `wk: Matrix<D, D>`
+  - [x] `wv: Matrix<D, D>`
+  - [x] `wo: Matrix<D, D>`
+- [x] Define generic `struct FfnWeights<const D: usize, const F: usize>`:
+  - [x] `w1: Matrix<F, D>` // gate
+  - [x] `w2: Matrix<F, D>` // up
+  - [x] `w3: Matrix<D, F>` // down
+- [x] Define generic `struct LayerWeights<const D: usize, const F: usize>`:
+  - [x] `attention: AttentionWeights<D>`
+  - [x] `ffn: FfnWeights<D, F>`
+  - [x] `attention_norm: [f32; D]`
+  - [x] `ffn_norm: [f32; D]`
+- [x] Types guarantee correct dimensions at compile time
 
 ### Acceptance Criteria
-- [ ] RoPE tests pass for known rotation angles
-- [ ] Config validates dimensions (e.g., model_dim = n_heads * head_dim)
-- [ ] Weight structures compile and can be instantiated
-- [ ] All code documented
+- [x] RoPE tests pass for known rotation angles
+- [x] Config validates dimensions (e.g., model_dim = n_heads * head_dim)
+- [x] Weight structures compile and can be instantiated
+- [x] All code documented
 
 ### Notes / Blockers
 ```
